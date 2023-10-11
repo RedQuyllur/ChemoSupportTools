@@ -453,16 +453,62 @@ A complete application example can be found in the "
 
 ### How to create configuration class and pin your methods<a id="interact-sc-configuration"></a>
 
-<br />
-Tomodify current methods and better understand how charts are created and updated, I recommend checking out 
+At first, you need to pin your method to existing `PreprocessorClass`, or if you want to, define a new one. Remember, your method must be declared using the `data interface` wrapper:
 
+```python
+class YourPreprocessorClass:
+
+    @statisticmethod
+    @data_interface(instruction=DataFoldsConstants.example_instruction)
+    def your_method(
+            y: np.ndarray = None,
+            example_arg1: float = 0.0,
+            example_arg2: int = 0
+        ) -> np.ndarray:
+            # Method body 
+```
+
+Next, you need to define a widget `configuration class`. To do this, you need to create a dictionary containing keys that are the same as the method arguments, and their values are set by calling the methods of the `JupyterWidgetsConstants` class depending on the argument type. This is done as in the template below:
+
+```python
+class ConfigYourPreprocessorClass:
+
+    CW: JupyterWidgetsConstants = JupyterWidgetsConstants()
+
+    _YOUR_METHOD = {
+        "example_arg1": CW.get_config_slider_float_log(
+            description="example_arg1_name_to_be_displayed", value=0.0, minimum=0, maximum=10, step=0.5),
+        "example_arg2": CW.get_config_slider_int(
+            description="example_arg2_name_to_be_displayed", value=0, minimum=-2, maximum=4, step=2),
+    }
+
+    CONFIGURATIONS = {
+        "your_method": _YOUR_METHOD
+    }
+```
+
+Next you need to pin your configuration class to [parsing method](../main/src/graphs/graphs_interactive_widgets_configurations.py) adding case:
+
+```python
+if your_class.__name__ == "YourPreprocessorClass":
+    configuration_class = YourPreprocessorClass
+```
+
+Finally, if necessary, modify the source code of the charts to suit your needs. Unpacking data to create/update a chart is specified in the interactive charts source code. The same applies to expansions regarding axis names. To adapt generation methods and better understand how charts are created and updated, I recommend checking out 
 [Jupyter Notebook Generator source code](../main/notebooks/interactive_diagrams.ipynb)
 .
 <br />
+<br />
 
-### File management
+Example classes directories/files:
+- [configuration class example](../main/src/graphs/constants/config_baseline.py),
+- [coressponding preprocessor class](../main/src/processing/methods/baseline.py),
+- [Jupyter Widgets constants class](../main/src/graphs/constants/constants.py),
+- [configuration switch-case parsing method](../main/src/graphs/graphs_interactive_widgets_configurations.py).
 
-**WIP**
+
+### File management **WIP**
+
 <br />
 
 ## Example analysis - Notebooks Use Cases<a id="analysis-examples"></a>
