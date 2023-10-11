@@ -1,0 +1,61 @@
+Sample Code,Country of Purchase,Country of Coffee Origin as stated on label,Measured 16-OMC + 16-OMK content from 3.16ppm peak (mg/kg)
+CS01,Poland,Not specified,3
+CS02,Poland,Not specified,8
+CS03,Poland,Brazil,8
+CS11,France,Not specified,4
+CS12,France,Not specified,12
+CS13,France,Not specified,8
+CS14,France,Ethiopia,6
+CS18,The Netherlands,Not specified,3
+CS19,UK,Java,13
+CS20,UK,Kenya,0
+CS21,UK,Colombia,0
+CS22,UK,Colombia,5
+CS23,UK,Kenya,1
+CS25,UK,Africa Indonesia Latin America,0
+CS26,UK,Not specified,1
+CS27,UK,Colombia,1
+CS28,UK,Colombia,10
+CS29,UK,Kenya,15
+CS30,UK,Not specified,16
+CS31,UK,Guatemala,4
+CS32,UK,Not specified,9
+CS33,UK,Not specified,9
+CS34,UK,Not specified,9
+CS36,Italy,Not specified,5
+CS37,France,Not specified,13
+CS39,France,Not specified,10
+CS40,Germany,Not specified,5
+CS41,France,Not specified,4
+CS42,Italy,Not specified,4
+CS43,Spain,Colombia,25
+CS44,Italy,Nicaragua,21
+CS45,USA,Not specified,76
+CS46,USA,Not specified,208
+CS47,USA,Not specified,528
+CS48,USA,Not specified,5
+CS49,USA,Not specified,12
+CS50,The Netherlands,Not specified,11
+CS51,The Netherlands,Not specified,4
+CS53,USA,Not specified,3
+CS54,USA,Mexico,22
+CS55,USA,Mexico,4
+CS56,USA,Not specified,5
+CS57,Australia,Not specified,4
+CS58,Italy,Not specified,9
+CS59,Italy,Not specified,41
+CS60,Estonia,Not specified,212
+CS61,UK,Mexico,351
+CS62,UK,Costa Rica,4
+CS63,UK,Brazil,0
+CS64,UK,Brazil,4
+CS65,UK,Ethiopia,13
+CS66,Italy,Costa Rica,6
+CS67,UK,Brazil Nicaragua Honduras,6
+CS68,UK,Brazil Nicaragua Honduras,2
+DH1,UK,Ethiopia,5
+DH2,UK,Brazil,6
+DH3,UK,Guatemala,1
+DH4,UK,Colombia,3
+DH5,UK,Kenya,3
+DH6,UK,Not specified,0
