@@ -55,12 +55,14 @@ src
 ```
 
 The source code structure is divided into branches, one for each module:
-- [graphs][2] - a section that stores the source code of frequently used charts to improve the readability of notebooks; also constant classes for generators and interactive modules,
+- [graphs][2] - a section that stores the source code of frequently used charts to improve the readability of notebooks; also constant classes for generators and interactive modules;
 - [processing][3] - a section that collects:
   - the static ***processing methods***,
   - a ***dataset constants***, ***configurations*** and allowed co-occurrence,
   - a ***data handling*** scenarios (batch processing, feeding data to a method, updating a fold/handling the result),
 - [readers][4] (optionaly) - a module supporting file and path management.
+
+There is one exception. [Interactive diagrams](#analysis-examples-interact-sc) source code is located in `notebooks` directory. This is for practical purposes. The source code uses Jupyter widget methods, so they are stored in files with the `.ipynb` extension. Referring to such files stored in another location causes unnecessary confusion. Additionally, the tool requires adapting the source code to the individual project requirements, so it should be stored in an appropriate directory/branch/fork.
 
 [2]:../main/src/graphs
 [3]:../main/src/processing
@@ -116,7 +118,7 @@ Takes the same effect as equivalent below:
 ```python
 processed_nested_data = {}
 for fold_name, fold_data in nested_data:
-    processed_data = [
+  processed_data = [
     Preprocessor.library.method(y=data, example_arg=arg_val) for data in fold_data[label].to_list()
   ]
   fold_data[label] = processed_data
@@ -275,6 +277,7 @@ This facilitates subsequent modification of the code to support multiprocessing.
 <br />
 
 ##### Updating switch-case<a id="packing"></a>
+
 Below you can see an example of implementing a data update operation. The first argument `data_format` is a switch-case wrapper argument, it is only used to distinguish the methods we want to call.
 
 ```python
@@ -293,9 +296,164 @@ def _pack_wrapper_result_as_y(
 [Practical example abd default workspace directory](../main/src/processing/format/data_wrapper_format_unpack.py)
 <br />
 
-### Dynamic figures and iteractive widgets
+### Dynamic figures and iteractive widgets<a id="analysis-examples-interact-sc"></a>
 
-**WIP**
+When we first deal with data, we usually do not have the ability to calibrate the method parameters. Mostly, there is no clear criterion or there is no time to implement automatic tuning methods in the early phase of evaluation.
+<br />
+To better understand the impact of a new method on our set or model, it is necessary to manually tune the methods. In the worst case, this means compiling the code multiple times and selecting "optimal" parameters based on the results obtained, our intuition and experience.
+<br /><br />
+To partially solve this problem, the project included a tool that allows processing small data sets and observing the results in real time.
+<br />
+The tool includes a widget generator for method arguments and an interactive graph showing the results of the operation. The chart is updated after changing the parameter settings in the generated widget.
+
+![image](../main/images/01_example_interactive.png "Generated interactive widget based")
+
+The size of the set should be adjusted to the method execution time so that the graphs can be drawn in a smooth (acceptable) way. 
+The feeling of smoothness is ensured with the total time of method execution and chart update around 50Hz (20ms). 
+However, this limit is very strict. Here we should, above all, be guided by our own needs. 
+Times of 200ms or 3s are also fine - it all depends on our requirements.
+<br />
+
+### How to use generator - step by step
+
+Before we start working, we should make sure that:
+- our methods and class have the appropriate configuration files;
+- our method is declared with the `data_interface` wrapper;
+- we have previously loaded our data set and it is adapted to work with the `data_interface` wrapper.
+
+<br />
+Instructions for connecting your method and preparing the configuration are described in the [next chapter](#interact-sc-configuration).
+<br />
+<br />
+If we have met all the requirements, we can proceed to the appropriate part.
+<br />
+<br />
+
+First you need to import:
+- data processing methods,
+- methods supporting the work of wrappers,
+- widget configurations for our processing methods,
+- methods related to widget generation and charts.
+
+Be careful here, the methods are stored in the Notepad file, so to import them you need to use the `%run` command instead of `import`:
+
+```python
+from src.processing.processing_methods import *
+from src.processing.format.data_wrapper_operations import WrapperOperations
+from src.graphs.interactive_widgets_configurations import *
+
+from ipywidgets import interact, fixed
+
+%run interactive_diagrams.ipynb
+```
+
+Next you need to declare your the configuration. The configuration section contains the following variables:
+- `CONFIG` - configuration class reference;
+- `instruction` - `data_interface` configuration object;
+- `dataset_raw` - dataset to be processed, should be loaded in first;
+- `folds_available` - data fold keys (names), used to switch between folds without recomplinig code, only one fold can be processed at a time;
+- `folds_names` - data fold keys (names), used to switch between folds without recomplinig code, only one fold can be processed at a time;
+- `data_x_column_name` - default data label, used to extract data while creating and updating a graph, also to set the description;
+- `data_y_column_name` - default x-axis label, used to set x-axis on a graph (label and scale);
+- `x_available` - available x-axis labels, used to switch between scales without recomplinig code; 
+- `my_class` - processing class;
+- `my_func` - processing fuction (must be defined in `my_class` with `data_interface` wrapper!).
+
+A declaration should look like the example below:
+
+```python
+### CONFIG SPACE ###
+CONFIG = DataFoldsConstants.spectro.ftir
+instruction = CONFIG.config_y
+
+dataset_raw = dataset_raw 
+
+folds_available = list(dataset_raw.keys())
+folds_names = [folds_available[0]]
+
+data_x_column_name = CONFIG.constants.X_WAVENUMBER
+data_y_column_name = CONFIG.constants.Y_SPECTRUM
+x_available = [data_x_column_name] 
+
+my_class = Baseline 
+my_func = my_class.als_optimized
+### END OF CONFIG SPACE ### 
+```
+
+In the next step, we need to access the following parameters (based on the passed class and method):
+- class name,
+- method name,
+- default values of method arguments,
+- configuration of widgets provided for the method.
+
+For this purpose, the `get_func_configuration` method has been provided:
+
+```python
+class_name, func_name, func_defaults, func_configurations = get_func_configuration(
+    your_class=my_class, your_func=my_func
+)
+```
+
+Next, optionaly, we can check that a processing method will compile without erros:
+
+```python
+try:
+    dataset_processed = my_func(data=dataset_raw, instruction=instruction, **func_defaults)
+except Exception as e:
+    print(f"PROCESSING ERR! Error msg:\n{e}")
+```
+
+If everything went well, we create widgets that will be linked to our chart later:
+
+```python
+widgets = create_widgets(
+    func_configurations=func_configurations, 
+    func_defaults=func_defaults,
+    x_available=x_available
+)
+```
+
+Next we create initial figure objects:
+
+```python
+inter_fig, inter_fig_ax = diagram_draw(
+    dataset=dataset_processed, 
+    title="initial", 
+    data_x_column_name=data_x_column_name,
+    data_y_column_name=data_y_column_name,
+    folds_names=folds_names
+)
+```
+
+Then we create a link between our generated widgets and the chart object:
+
+```python
+interact(
+    diagram_interact,
+    **widgets,
+    ax=fixed(inter_fig_ax),
+    dataset=fixed(dataset_raw), 
+    processing_func=fixed(my_func), 
+    class_name=fixed(class_name), 
+    func_name=fixed(func_name), 
+    func_instruction=fixed(instruction),
+    func_configurations=fixed(func_configurations),
+    data_x_column_name=fixed(data_x_column_name),
+    data_y_column_name=fixed(data_y_column_name),
+    folds_names=fixed(folds_names),
+    x_available=fixed(x_available)
+)
+```
+
+A complete application example can be found in the Notebook file 
+[Manual calibration of methods in live-processed-diagrams](../main/notebooks/00_wine_spectra_baseline_calibration_interactive_example.ipynb)<a id="analysis-examples-interact"></a>
+<br /> 
+
+### How to create configuration class and pin your methods<a id="interact-sc-configuration"></a>
+
+<br />
+To add additional methods and better understand how charts are created and updated, I recommend checking out 
+[Jupyter Notebook Generator source code](../blob/main/notebooks/interactive_diagrams.ipynb)
 <br />
 
 ### File management
@@ -352,13 +510,7 @@ Description of the file contents with links to selected sections:
 <br /> [Reference material](https://www.sciencedirect.com/science/article/pii/S0308814617319829?via%3Dihub)
 <br />
 
-### Real-time Interactive Widgets Example<a id="analysis-examples-interact"></a>
-[**Manual calibration of methods in live-processed-diagrams**](../main/notebooks/00_wine_spectra_baseline_calibration_interactive_example.ipynb)
-<br />
 
-![image](../main/images/01_example_interactive.png "Generated interactive widget based")
-<br /> [Jupyter Notebook widget generator source code](../blob/main/notebooks/interactive_diagrams.ipynb)<a id="analysis-examples-interact-sc"></a>
-<br />
 
 ## Contributing
 
