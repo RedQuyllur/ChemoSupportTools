@@ -321,8 +321,8 @@ Before we start working, we should make sure that:
 - our method is declared with the `data_interface` wrapper;
 - we have previously loaded our data set and it is adapted to work with the `data_interface` wrapper.
 
-<br />
-Instructions for connecting your method and preparing the configuration are described in the [next chapter](#interact-sc-configuration).
+Instructions for connecting your method and preparing the configuration are described in the 
+[next chapter](#interact-sc-configuration).
 <br />
 <br />
 If we have met all the requirements, we can proceed to the appropriate part.
@@ -445,15 +445,19 @@ interact(
 )
 ```
 
-A complete application example can be found in the Notebook file 
-[Manual calibration of methods in live-processed-diagrams](../main/notebooks/00_wine_spectra_baseline_calibration_interactive_example.ipynb)<a id="analysis-examples-interact"></a>
+A complete application example can be found in the "
+[Manual calibration of methods in live-processed-diagrams](../main/notebooks/00_wine_spectra_baseline_calibration_interactive_example.ipynb)
+"  Notebook file.
+<a id="analysis-examples-interact"></a>
 <br /> 
 
 ### How to create configuration class and pin your methods<a id="interact-sc-configuration"></a>
 
 <br />
-To add additional methods and better understand how charts are created and updated, I recommend checking out 
-[Jupyter Notebook Generator source code](../blob/main/notebooks/interactive_diagrams.ipynb)
+Tomodify current methods and better understand how charts are created and updated, I recommend checking out 
+
+[Jupyter Notebook Generator source code](../main/notebooks/interactive_diagrams.ipynb)
+.
 <br />
 
 ### File management
@@ -462,20 +466,26 @@ To add additional methods and better understand how charts are created and updat
 <br />
 
 ## Example analysis - Notebooks Use Cases<a id="analysis-examples"></a>
-The main goal I wanted to achieve when creating this notebook was to summarize my observations acquired while working with optical data.
+The main goal I wanted to achieve in this project was to summarize my observations acquired while working with the chemometrics data.
 <br />
 <br />
-Books for beginners usually only cover the basics of statistics; modern algorithms are often omitted or described in a very general and impractical way. This forces the reader to look for solutions in specialized literature, which focuses on a lot of theory and details, instead of showing a practical solution to the problem. The high entry level makes people decide to use ready-made software, often skipping theoretical preparation.
-<br />
-<br />
-During my professional life, I came across a lot of articles where bizarre mistakes were made. Overtrained models, failure to take into account factors co-occurring during the experiment, incorrectly calculated correlation factors, lack of basic optimizations or checking the impact of the method used on the signal quality.
+Books for beginners usually only cover the basics of statistics. Modern algorithms are often omitted or described in a very general and impractical way. This forces the reader to look for solutions in specialized literature, which focuses on a lot of theory and details, instead of showing a practical solution to the problem. The high entry level makes people decide to use ready-made software, often skipping theoretical preparation. I came across a lot of articles where bizarre mistakes were made. Overtrained models, failure to take into account factors co-occurring during the experiment, incorrectly calculated correlation factors, lack of basic optimizations or checking the impact of the method used on the signal quality.
 <br />
 
-Mastering these issues requires extensive knowledge, often from several disciplines. The answers are scattered among specialized books in the field of:
+Mastering all necessary issues requires extensive knowledge and expirience, often from several disciplines. The answers are scattered among specialized books in the field of:
 - ***electronics*** and ***signal processing techniques*** (properties of the sensors used, effects related to instrumentation, noise properties and co-occurring interferences, technological limits),
 - ***programming***, ***algorithms***, and ***archtecture*** used (selection of tools and architecture, CI-CD, TDD implementation),
 - ***mathematics*** and ***modern analysis techniques*** (data augmentation, feature-selection, validation, modeling, ML and NN tools),
 - as well as knowledge about the object or scientific experiment we are examining.
+
+Depending on the problem and the data we have, we should choose appropriate modeling and processing techniques. However, many methods are suitable for use between different types of signals. Therefore, I would like to show that tools can be created in such a way that they can be used also after changing the type of instrumentation, or when starting a new, unrelated research project, as a template.
+
+In my analyses, I will focus mainly on issues related to classification and regression, using data from the following areas:
+- FTIR spectroscopy (spectral signal),
+- NMR spectroscopy (spectral signal),
+- calorimetry (time signal),
+- resistance/impedance measurements (time signal),
+- PPG signal (time signal).
 
 ```bash
 notebooks
@@ -492,29 +502,45 @@ Description of the file contents with links to selected sections:
 <br />
 
 ### Spectral analysis - Classification **WIP**<a id="analysis-examples-ftir"></a>
+Notebook file:
 [**Wine spectra with Fourier-Transform Infra Red spectrometer**](../main/notebooks/00_wine_spectra_analysis_fourier_infrared.ipynb)
+
+**Project includes:**
+- main goal and problem description,
+- first look into data,
+- example preprocessing (min-max, SNV, ALS, Fourier, Sav-Gol),
+- preprcessing result comparison using PCA,
+- clustering **WIP**,
+- feature extraction **WIP**,
+- prediction bassed on classification methods **WIP**,
+- dataset augumentation **WIP**.
+
 <br />
-**WIP**
-<br />
-<br /> [Dataset](https://github.com/QIBChemometrics/Wine_Cabernet_Shiraz_FTIR#wine_cabernet_shiraz_ftir)
-<br /> [Reference material](https://www.sciencedirect.com/science/article/abs/pii/S0956713519302294?via%3Dihub)
-<br />
+
+**Materials:**
+- [Dataset](https://github.com/QIBChemometrics/Wine_Cabernet_Shiraz_FTIR#wine_cabernet_shiraz_ftir),
+- [Reference material](https://www.sciencedirect.com/science/article/abs/pii/S0956713519302294?via%3Dihub).
+
 
 ### Spectral analysis - Regression **WIP**<a id="analysis-examples-nmr"></a>
+Notebook file:
 [**Coffee as Nuclear Magnetic Resonance spectrum**](../main/notebooks/01_coffees_spectra_analysis_nuclear_magnetic_resonance.ipynb)
-<br />
-**WIP**
-<br />
-<br /> [Dataset](https://github.com/QIBChemometrics/Benchtop-NMR-Coffee-Survey)
-<br /> [Supplementary data](https://ars.els-cdn.com/content/image/1-s2.0-S0308814617319829-mmc1.pdf)
-<br /> [Reference material](https://www.sciencedirect.com/science/article/pii/S0308814617319829?via%3Dihub)
-<br />
 
-
-
-## Contributing
+**Project includes:**
+- main goal and problem description,
+- first look into data,
+- example preprocessing **WIP**,
+- prediction based on regression methods **WIP**,
+- feature extraction **WIP**,
+- global optimalization.
 
 <br />
+
+**Materials:**
+- [Dataset](https://github.com/QIBChemometrics/Benchtop-NMR-Coffee-Survey),
+- [Supplementary data](https://ars.els-cdn.com/content/image/1-s2.0-S0308814617319829-mmc1.pdf),
+- [Reference material](https://www.sciencedirect.com/science/article/pii/S0308814617319829?via%3Dihub).
+
 
 ## License
 
