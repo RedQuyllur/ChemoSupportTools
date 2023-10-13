@@ -3,7 +3,7 @@ Chemometrics Support Tools is a simple system, projected to support the developm
 <br />
 <br />
 The project is divided into two sections:
-1. [System solutions](#source-code) supporting the development process in dynamically changing project conditions (basic modules, example implementation, encapsulation, self-commenting and clean code),
+1. [System solutions](#source-code) supporting the development process in dynamically changing project conditions,
 2. [Example analysis](#analysis-examples), system use-case, observations and workflow related to problems in the field of chemometrics (examples of solving the most common problems, full workflow from loading data to obtaining the first results).
 
 A detailed description is available in the following chapters, you can access them directly by using the links above.
@@ -515,7 +515,7 @@ Example classes directories/files:
 The main goal I wanted to achieve in this project was to summarize my observations acquired while working with the chemometrics data.
 <br />
 <br />
-Books for beginners usually only cover the basics of statistics. Modern algorithms are often omitted or described in a very general and impractical way. This forces the reader to look for solutions in specialized literature, which focuses on a lot of theory and details, instead of showing a practical solution to the problem. The high entry level makes people decide to use ready-made software, often skipping theoretical preparation. I came across a lot of articles where bizarre mistakes were made. Overtrained models, failure to take into account factors co-occurring during the experiment, incorrectly calculated correlation factors, lack of basic optimizations or checking the impact of the method used on the signal quality.
+Books for beginners usually only cover the basics of statistics. Modern algorithms are often omitted or described in a very general and impractical way. This forces the reader to look for solutions in specialized literature, which focuses on a lot of theory and details, instead of showing a practical solution to the problem. The high entry level makes people decide to use ready-to-use software, often skipping theoretical preparation. I came across a lot of articles where bizarre mistakes were made. Overtrained models, failure to take into account factors co-occurring during the experiment, incorrectly calculated correlation factors, lack of basic optimizations or checking the impact of the method used on the signal quality.
 <br />
 
 Mastering all necessary issues requires extensive knowledge and expirience, often from several disciplines. The answers are scattered among specialized books in the field of:
@@ -523,8 +523,6 @@ Mastering all necessary issues requires extensive knowledge and expirience, ofte
 - ***programming***, ***algorithms***, and ***archtecture*** used (selection of tools and architecture, CI-CD, TDD implementation),
 - ***mathematics*** and ***modern analysis techniques*** (data augmentation, feature-selection, validation, modeling, ML and NN tools),
 - as well as knowledge about the object or scientific experiment we are examining.
-
-Depending on the problem and the data we have, we should choose appropriate modeling and processing techniques. However, many methods are suitable for use between different types of signals. Therefore, I would like to show that tools can be created in such a way that they can be used also after changing the type of instrumentation, or when starting a new, unrelated research project, as a template.
 
 In my analyses, I will focus mainly on issues related to classification and regression, using data from the following areas:
 - FTIR spectroscopy (spectral signal),
@@ -578,7 +576,7 @@ Notebook file:
 - example preprocessing **WIP**,
 - prediction based on regression methods **WIP**,
 - feature extraction **WIP**,
-- global optimalization.
+- global optimalization **WIP**.
 
 <br />
 
