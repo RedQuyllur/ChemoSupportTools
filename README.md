@@ -35,7 +35,7 @@ Default project structure includes the following directories:
 - Add an example of analysis of photos with brain disorders/diseases
 <br />
 
-## Tools: First look into source code<a id="source-code"></a>
+## Tools: First look at source code<a id="source-code"></a>
 In the early phases of projects the data structures, instrumentation, and processing methods change frequently.
 This causes a lot of problems: getting stuck in a constant refactoring process instead of development, 
 lack of time to implement TDD solutions, errors detected too late because the data format changed at the last minute...
@@ -551,7 +551,7 @@ Notebook file:
 
 **Project includes:**
 - main goal and problem description,
-- first look into data,
+- first look at the data,
 - example preprocessing (min-max, SNV, ALS, Fourier, Sav-Gol),
 - preprcessing result comparison using PCA,
 - clustering **WIP**,
@@ -572,7 +572,7 @@ Notebook file:
 
 **Project includes:**
 - main goal and problem description,
-- first look into data,
+- first look at the data,
 - example preprocessing **WIP**,
 - prediction based on regression methods **WIP**,
 - feature extraction **WIP**,
