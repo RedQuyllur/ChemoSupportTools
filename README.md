@@ -36,12 +36,7 @@ Default project structure includes the following directories:
 <br />
 
 ## Tools: First look at source code<a id="source-code"></a>
-In the early phases of projects the data structures, instrumentation, and processing methods change frequently.
-This causes a lot of problems: getting stuck in a constant refactoring process instead of development, 
-lack of time to implement TDD solutions, errors detected too late because the data format changed at the last minute...
-<br />
-<br />
-This time my goal is to develop a lightweight system that will provide convenient access to basic tools, while remaining as flexible and resistant as possible.
+My goal is to develop a lightweight system that will provide convenient access to basic tools, while remaining as flexible and resistant as possible.
 ```bash
 src
 |-- graphs
